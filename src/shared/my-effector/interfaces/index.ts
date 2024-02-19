@@ -12,7 +12,7 @@ export interface ISchema<TValue> {
   isNotEmpty: { message: string };
   min: { value: number; message: string };
   max: { value: number; message: string };
-  match: (value: string | number) => boolean;
+  match: { check: (value: TValue) => boolean; message: string };
   value: TValue;
 }
 
@@ -25,7 +25,10 @@ export type TStore<TObject extends object> = {
   [Key in keyof TObject]: IFormField<TObject[Key]>;
 };
 
-export interface IFieldUpdatedProps<TObject, TValue = string | number | boolean | undefined> {
+export interface IFieldUpdatedProps<
+  TObject,
+  TValue extends TObject[keyof TObject]
+> {
   key: keyof TObject;
   value: TValue;
 }

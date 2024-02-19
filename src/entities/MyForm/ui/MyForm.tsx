@@ -1,15 +1,21 @@
 import { Button, Form, Space, Typography } from "antd";
-import { useMyForm } from "../hooks/useMyForm";
-import { cars, fieldUpdated, initialValueSet } from "../model";
+import {
+  $isFormValid,
+  $store,
+  cars,
+  fieldUpdated,
+  initialValueSet,
+} from "../model";
 import {
   MyInput,
   MyInputNumber,
   MyCheckbox,
   MySelect,
+  IFormField,
+  MySubmitButton,
 } from "@shared/my-effector";
 
 export function MyForm() {
-  const { store, isFormValid } = useMyForm();
 
   return (
     <Form>
@@ -17,21 +23,24 @@ export function MyForm() {
         <Typography.Title>MyForm</Typography.Title>
         <MyInput
           label="Имя"
-          field={store.name}
+          // field={store.name}
+          $store={$store}
           fieldUpdated={fieldUpdated}
           fieldKey="name"
         />
         <MyInputNumber
           label="Возраст"
-          field={store.age}
+          // field={store.age}
+          $store={$store}
           fieldUpdated={fieldUpdated}
           fieldKey="age"
         />
-        <MyCheckbox
+        {/* <MyCheckbox
           label="Любит выпить"
           field={store.isLikeAlcohol}
           fieldUpdated={fieldUpdated}
           fieldKey="isLikeAlcohol"
+          requiredField
         />
         <MySelect
           label="Машина"
@@ -42,9 +51,10 @@ export function MyForm() {
           selectProps={{
             allowClear: true,
           }}
-        />
-        <Button disabled={!isFormValid}>Отправить</Button>
-        <Button
+        /> */}
+        {/* <Button disabled={!isFormValid}>Отправить</Button> */}
+        <MySubmitButton $isValid={$isFormValid} text="Отправить" />
+        {/* <Button
           onClick={() => {
             initialValueSet({
               name: "",
@@ -55,7 +65,7 @@ export function MyForm() {
           }}
         >
           Изменить
-        </Button>
+        </Button> */}
       </Space>
     </Form>
   );

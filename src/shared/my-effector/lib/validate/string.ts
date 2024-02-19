@@ -34,14 +34,18 @@ export function stringValidation(
     };
   }
 
-  if (schema.match && !schema?.match(value)) {
-    return {
-      value,
-      validation: {
-        isValid: false,
-        message: "Не пройдена валидация",
-      },
-    };
+  if (schema.match) {
+    const isMatched = schema.match.check(value);
+
+    if (!isMatched) {
+      return {
+        value,
+        validation: {
+          isValid: false,
+          message: schema.match.message,
+        },
+      };
+    }
   }
 
   return;

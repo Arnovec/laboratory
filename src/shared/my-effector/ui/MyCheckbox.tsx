@@ -23,7 +23,7 @@ export function MyCheckbox<TObject>({
   checkboxProps = undefined,
 }: IProps<TObject>) {
   function handleCheckboxChanged(event: CheckboxChangeEvent) {
-    const updatedField: IFieldUpdatedProps<TObject, boolean> = {
+    const updatedField: IFieldUpdatedProps<TObject> = {
       key: fieldKey,
       value: event.target.checked,
     };
@@ -32,11 +32,7 @@ export function MyCheckbox<TObject>({
   }
 
   return (
-    <MyFormItem
-      field={field}
-      label={label}
-      requiredField={requiredField}
-    >
+    <MyFormItem field={field} label={label} requiredField={requiredField}>
       <Checkbox
         {...checkboxProps}
         checked={field.value}
