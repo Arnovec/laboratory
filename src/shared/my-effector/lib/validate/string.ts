@@ -2,11 +2,13 @@ import { ISchema, IFormField } from "../../../my-effector";
 
 export function stringValidation(
   schema: Partial<ISchema<string>>,
-  value: string
+  value: string,
+  touched: boolean
 ): IFormField<string> | void {
   if (schema.isNotEmpty && value === "") {
     return {
       value,
+      touched,
       validation: {
         isValid: false,
         message: schema.isNotEmpty.message,
@@ -17,6 +19,7 @@ export function stringValidation(
   if (schema.min && value.length < schema.min.value) {
     return {
       value,
+      touched,
       validation: {
         isValid: false,
         message: schema.min.message,
@@ -27,6 +30,7 @@ export function stringValidation(
   if (schema.max && value.length > schema.max.value) {
     return {
       value,
+      touched,
       validation: {
         isValid: false,
         message: schema.max.message,
@@ -40,6 +44,7 @@ export function stringValidation(
     if (!isMatched) {
       return {
         value,
+        touched,
         validation: {
           isValid: false,
           message: schema.match.message,

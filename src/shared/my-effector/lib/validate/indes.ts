@@ -14,7 +14,8 @@ type TypesMap = {
 type TValidateByTypeFXs = {
   [TypeName in keyof TypesMap]: (
     schema: Partial<ISchema<TypesMap[TypeName]>>,
-    value: TypesMap[TypeName]
+    value: TypesMap[TypeName],
+    touched: boolean
   ) => IFormField<TypesMap[TypeName]> | void;
 };
 
@@ -26,7 +27,8 @@ const validateByTypeFXs: TValidateByTypeFXs = {
 
 export function validateByType<T extends string | number | boolean>(
   schema: Partial<ISchema<T>>,
-  value: T
+  value: T,
+  touched: boolean
 ): IFormField<T> | void {
   const valueType = typeof value;
 
@@ -35,7 +37,7 @@ export function validateByType<T extends string | number | boolean>(
     valueType === "number" ||
     valueType === "boolean"
   ) {
-    return validateByTypeFXs[valueType](schema, value);
+    return validateByTypeFXs[valueType](schema, value, touched);
   }
 
   return;

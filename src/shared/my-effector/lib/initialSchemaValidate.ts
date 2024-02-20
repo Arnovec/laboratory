@@ -7,7 +7,11 @@ export function initialSchemaValidate<TObject extends object>(
   const initialMicrostateEntries = Object.keys(schema).map((key) => {
     return [
       key,
-      validateSchema(schema[key as keyof TObject], schema[key as keyof TObject]?.value),
+      validateSchema(
+        schema[key as keyof TObject],
+        schema[key as keyof TObject]?.value,
+        false
+      ),
     ];
   });
 

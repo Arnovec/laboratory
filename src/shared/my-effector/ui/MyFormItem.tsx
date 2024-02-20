@@ -15,9 +15,8 @@ export function MyFormItem<TValue>({
   requiredField = false,
   children,
 }: IProps<TValue>) {
-  // const isTouched = form.isFieldTouched(fieldKey);
-  // console.log("isTouched ", isTouched);
-  const itemStatus = !field.validation.isValid ? "error" : undefined;
+  const itemStatus =
+    field.touched && !field.validation.isValid ? "error" : undefined;
   const message = itemStatus && field?.validation.message;
 
   return (

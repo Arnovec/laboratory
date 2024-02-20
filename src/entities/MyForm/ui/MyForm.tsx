@@ -3,7 +3,10 @@ import {
   $isFormValid,
   $store,
   cars,
+  dataReset,
   fieldUpdated,
+  fieldValueDataReset,
+  forcedErrorsSet,
   initialValueSet,
 } from "../model";
 import {
@@ -11,33 +14,31 @@ import {
   MyInputNumber,
   MyCheckbox,
   MySelect,
-  IFormField,
   MySubmitButton,
 } from "@shared/my-effector";
 
 export function MyForm() {
-
   return (
     <Form>
       <Space direction="vertical" style={{ width: "100%" }}>
         <Typography.Title>MyForm</Typography.Title>
         <MyInput
           label="Имя"
-          // field={store.name}
           $store={$store}
           fieldUpdated={fieldUpdated}
           fieldKey="name"
+          requiredField
         />
         <MyInputNumber
           label="Возраст"
-          // field={store.age}
           $store={$store}
           fieldUpdated={fieldUpdated}
           fieldKey="age"
+          requiredField
         />
-        {/* <MyCheckbox
+        <MyCheckbox
           label="Любит выпить"
-          field={store.isLikeAlcohol}
+          $store={$store}
           fieldUpdated={fieldUpdated}
           fieldKey="isLikeAlcohol"
           requiredField
@@ -45,16 +46,15 @@ export function MyForm() {
         <MySelect
           label="Машина"
           options={cars}
-          field={store.car}
+          $store={$store}
           fieldUpdated={fieldUpdated}
           fieldKey="car"
           selectProps={{
             allowClear: true,
           }}
-        /> */}
-        {/* <Button disabled={!isFormValid}>Отправить</Button> */}
+        />
         <MySubmitButton $isValid={$isFormValid} text="Отправить" />
-        {/* <Button
+        <Button
           onClick={() => {
             initialValueSet({
               name: "",
@@ -65,7 +65,33 @@ export function MyForm() {
           }}
         >
           Изменить
-        </Button> */}
+        </Button>
+        <Button
+          onClick={() => {
+            forcedErrorsSet([
+              {
+                fieldName: "name",
+                message: "Проверка принудительной ошибки",
+              },
+            ]);
+          }}
+        >
+          Ошибки
+        </Button>
+        <Button
+          onClick={() => {
+            fieldValueDataReset("isLikeAlcohol");
+          }}
+        >
+          Сбросить поле алкоголь
+        </Button>
+        <Button
+          onClick={() => {
+            dataReset();
+          }}
+        >
+          Сбросить форму
+        </Button>
       </Space>
     </Form>
   );

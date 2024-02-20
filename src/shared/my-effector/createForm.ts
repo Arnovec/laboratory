@@ -1,5 +1,11 @@
 import { Store, createEvent, createStore } from "effector";
-import { IFieldUpdatedProps, TStore, TValidationSchema } from "./interfaces";
+import {
+  IFieldUpdatedProps,
+  IForcedError,
+  IFormField,
+  TStore,
+  TValidationSchema,
+} from "./interfaces";
 import { validateSchema } from "./lib/validateSchema";
 import { initialSchemaValidate } from "./lib/initialSchemaValidate";
 import { mapForm } from "./lib/mapForm";
@@ -11,9 +17,10 @@ export function createForm<TObject extends object>(
 ) {
   const dataReset = createEvent();
   const fieldValueDataReset = createEvent<keyof TObject>();
+  const forcedErrorsSet = createEvent<IForcedError<TObject>[]>();
+  const initialValueSet = createEvent<TObject>();
   const fieldUpdated =
     createEvent<IFieldUpdatedProps<TObject, TObject[keyof TObject]>>();
-  const initialValueSet = createEvent<TObject>();
 
   const initialStore = initialSchemaValidate(schema);
 
@@ -32,6 +39,27 @@ export function createForm<TObject extends object>(
     .on(initialValueSet, (_, payload) => {
       return initialSetValidate(schema, payload);
     })
+    .on(forcedErrorsSet, (state, payload) => {
+      const withErrorFields: Partial<
+        Record<keyof TObject, IFormField<unknown>>
+      > = {};
+
+      payload.forEach((elem) => {
+        withErrorFields[elem.fieldName] = {
+          value: state[elem.fieldName].value,
+          touched: true,
+          validation: {
+            isValid: false,
+            message: elem.message,
+          },
+        };
+      });
+
+      return {
+        ...state,
+        ...withErrorFields,
+      };
+    })
     .on(fieldValueDataReset, (state, key) => {
       return {
         ...state,
@@ -47,8 +75,10 @@ export function createForm<TObject extends object>(
     $store,
     $form,
     $isFormValid,
-    initialValueSet,
     fieldUpdated,
+    initialValueSet,
+    forcedErrorsSet,
+    fieldValueDataReset,
     dataReset,
   };
 }

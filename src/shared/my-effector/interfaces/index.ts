@@ -5,6 +5,7 @@ export interface IValidation {
 
 export interface IFormField<TValue> {
   value: TValue;
+  touched: boolean;
   validation: IValidation;
 }
 
@@ -31,4 +32,9 @@ export interface IFieldUpdatedProps<
 > {
   key: keyof TObject;
   value: TValue;
+}
+
+export interface IForcedError<TObject> {
+  fieldName: keyof TObject;
+  message: string;
 }

@@ -2,11 +2,13 @@ import { ISchema, IFormField } from "../../../my-effector";
 
 export function numberValidation(
   schema: Partial<ISchema<number>>,
-  value: number
+  value: number,
+  touched: boolean
 ): IFormField<number> | void {
   if (schema.min && value < schema.min.value) {
     return {
       value,
+      touched,
       validation: {
         isValid: false,
         message: schema.min.message,
@@ -17,6 +19,7 @@ export function numberValidation(
   if (schema.max && value > schema.max.value) {
     return {
       value,
+      touched,
       validation: {
         isValid: false,
         message: schema.max.message,
