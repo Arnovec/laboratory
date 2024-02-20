@@ -4,7 +4,7 @@ export interface IValidation {
 }
 
 export interface IFormField<TValue> {
-  value: TValue;
+  value: TValue | undefined;
   touched: boolean;
   validation: IValidation;
 }
@@ -13,7 +13,7 @@ export interface ISchema<TValue> {
   isNotEmpty: { message: string };
   min: { value: number; message: string };
   max: { value: number; message: string };
-  match: { check: (value: TValue) => boolean; message: string };
+  match: { check: (value: NonNullable<TValue>) => boolean; message: string };
   value: TValue;
 }
 

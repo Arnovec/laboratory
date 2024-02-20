@@ -28,6 +28,7 @@ export function validateSchema<TValue>(
 
   return {
     value,
+    touched,
     validation: {
       isValid: true,
       message: "",

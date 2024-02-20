@@ -27,5 +27,20 @@ export function numberValidation(
     };
   }
 
+  if (schema.match) {
+    const isMatched = schema.match.check(value);
+
+    if (!isMatched) {
+      return {
+        value,
+        touched,
+        validation: {
+          isValid: false,
+          message: schema.match.message,
+        },
+      };
+    }
+  }
+
   return;
 }

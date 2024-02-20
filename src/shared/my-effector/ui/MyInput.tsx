@@ -27,7 +27,7 @@ export function MyInput<TObject extends object>({
     store: $store,
     keys: [fieldKey],
     fn: (store): IFormField<string> => {
-      return store[fieldKey] as IFormField<string>;
+      return store[fieldKey] ;
     },
   });
 
