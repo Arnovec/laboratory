@@ -1,44 +1,49 @@
-import { ISchema, IFormField } from "../../../my-effector";
-import { booleanValidation } from "./boolean";
-import { numberValidation } from "./number";
-import { stringValidation } from "./string";
+import {ISchema, IFormField} from "../../../my-effector";
+import {booleanValidation} from "./boolean";
+import {numberValidation} from "./number";
+import {stringValidation} from "./string";
 
-export type validatedTypeNames = "string" | "number" | "boolean";
+export type TValidValueTypes = string | number | boolean;
 
-type TypesMap = {
-  ["string"]: string;
-  ["number"]: number;
-  ["boolean"]: boolean;
-};
-
-type TValidateByTypeFXs = {
-  [TypeName in keyof TypesMap]: (
-    schema: Partial<ISchema<TypesMap[TypeName]>>,
-    value: TypesMap[TypeName],
-    touched: boolean
-  ) => IFormField<TypesMap[TypeName]> | void;
-};
-
-const validateByTypeFXs: TValidateByTypeFXs = {
-  ["string"]: stringValidation,
-  ["number"]: numberValidation,
-  ["boolean"]: booleanValidation,
-};
-
-export function validateByType<T extends string | number | boolean>(
-  schema: Partial<ISchema<T>>,
-  value: T,
+export function validateByType(
+  schema: Partial<ISchema<TValidValueTypes>>,
+  value: TValidValueTypes,
   touched: boolean
-): IFormField<T> | void {
-  const valueType = typeof value;
-
-  if (
-    valueType === "string" ||
-    valueType === "number" ||
-    valueType === "boolean"
-  ) {
-    return validateByTypeFXs[valueType](schema, value, touched);
+): IFormField<TValidValueTypes> | void {
+  if (isString(value)) {
+    return stringValidation(schema as Partial<ISchema<string>>, value, touched);
   }
 
-  return;
+  if (isNumber(value)) {
+    return numberValidation(schema as Partial<ISchema<number>>, value, touched);
+  }
+
+  if (isBoolean(value)) {
+    return booleanValidation(schema as Partial<ISchema<boolean>>, value, touched);
+  }
 }
+
+function isString(obj: unknown): obj is string {
+  if (typeof obj === 'string') {
+    return true;
+  }
+
+  return false;
+}
+
+function isNumber(obj: unknown): obj is number {
+  if (typeof obj === 'number') {
+    return true;
+  }
+
+  return false;
+}
+
+function isBoolean(obj: unknown): obj is boolean {
+  if (typeof obj === 'boolean') {
+    return true;
+  }
+
+  return false;
+}
+

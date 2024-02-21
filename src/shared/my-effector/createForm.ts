@@ -19,8 +19,7 @@ export function createForm<TObject extends object>(
   const fieldValueDataReset = createEvent<keyof TObject>();
   const forcedErrorsSet = createEvent<IForcedError<TObject>[]>();
   const initialValueSet = createEvent<TObject>();
-  const fieldUpdated =
-    createEvent<IFieldUpdatedProps<TObject, TObject[keyof TObject]>>();
+  const fieldUpdated = createEvent<IFieldUpdatedProps<TObject>>();
 
   const initialStore = initialSchemaValidate(schema);
 

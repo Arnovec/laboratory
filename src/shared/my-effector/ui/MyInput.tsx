@@ -1,12 +1,12 @@
 import { Input, InputProps } from "antd";
-import { IFieldUpdatedProps, IFormField, TStore } from "../interfaces/index";
+import { IFieldUpdatedProps, TStore } from "../interfaces/index";
 import { Event, Store } from "effector";
 import { MyFormItem } from "./MyFormItem";
 import { useStoreMap } from "effector-react";
 
 interface IProps<TObject extends object> {
   $store: Store<TStore<TObject>>;
-  fieldKey: keyof TObject & string;
+  fieldKey: keyof TObject;
   fieldUpdated: Event<IFieldUpdatedProps<TObject>>;
   label: string;
   requiredField?: boolean;
@@ -21,20 +21,18 @@ export function MyInput<TObject extends object>({
   requiredField = false,
   inputProps = undefined,
 }: IProps<TObject>) {
-  console.log("field string");
-
-  const field: IFormField<string> = useStoreMap({
+  const field = useStoreMap({
     store: $store,
     keys: [fieldKey],
-    fn: (store): IFormField<string> => {
-      return store[fieldKey] ;
+    fn: (store) => {
+      return store[fieldKey];
     },
   });
 
   function handleInputChanged(event: React.ChangeEvent<HTMLInputElement>) {
-    const updatedField: IFieldUpdatedProps<TObject, string> = {
+    const updatedField = {
       key: fieldKey,
-      value: event.target.value,
+      value: event.target.value as TObject[keyof TObject],
     };
 
     fieldUpdated(updatedField);

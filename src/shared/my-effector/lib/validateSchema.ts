@@ -1,11 +1,11 @@
 import { IFormField, ISchema } from "../interfaces";
-import { validateByType } from "./validate/indes";
+import { validateByType, TValidValueTypes } from "./validate/indes";
 
-export function validateSchema<TValue>(
-  schema: Partial<ISchema<TValue>> | undefined,
-  value: TValue | undefined,
+export function validateSchema(
+  schema: Partial<ISchema<TValidValueTypes>> | undefined,
+  value: TValidValueTypes | undefined,
   touched: boolean = true
-): IFormField<TValue> {
+): IFormField<TValidValueTypes> {
   if (schema) {
     if (schema.isNotEmpty && value == null) {
       // isEmpty()
@@ -19,11 +19,15 @@ export function validateSchema<TValue>(
       };
     }
 
-    const validationResult = validateByType(schema, value, touched);
+    if (value != null) {
+      const validationResult = validateByType(schema, value, touched);
 
-    if (validationResult) {
-      return validationResult;
+      if (validationResult) {
+        return validationResult;
+      }
     }
+
+
   }
 
   return {

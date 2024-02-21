@@ -1,12 +1,12 @@
+export interface IFormField<TValue> {
+  value?: TValue;
+  touched: boolean;
+  validation: IValidation;
+}
+
 export interface IValidation {
   isValid: boolean;
   message: string;
-}
-
-export interface IFormField<TValue> {
-  value: TValue | undefined;
-  touched: boolean;
-  validation: IValidation;
 }
 
 export interface ISchema<TValue> {
@@ -26,12 +26,9 @@ export type TStore<TObject extends object> = {
   [Key in keyof TObject]: IFormField<TObject[Key]>;
 };
 
-export interface IFieldUpdatedProps<
-  TObject,
-  TValue extends TObject[keyof TObject]
-> {
+export interface IFieldUpdatedProps<TObject> {
   key: keyof TObject;
-  value: TValue;
+  value: TObject[keyof TObject];
 }
 
 export interface IForcedError<TObject> {

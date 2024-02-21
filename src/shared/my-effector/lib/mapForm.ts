@@ -6,12 +6,7 @@ export function mapForm<TObject extends object>(
   const reduceForm: Partial<TObject> = {};
 
   for (const key in store) {
-    if (Object.prototype.hasOwnProperty.call(store, key)) {
-      const storeElement: TObject[keyof TObject] = store[key].value;
-
-      //@ts-ignore
-      reduceForm[key] = storeElement;
-    }
+    reduceForm[key] = store[key].value;
   }
 
   return reduceForm as TObject;

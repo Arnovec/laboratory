@@ -1,10 +1,10 @@
 import { ISchema, IFormField } from "../../../my-effector";
 
-export function stringValidation(
-  schema: Partial<ISchema<string>>,
-  value: string,
+export function stringValidation<T extends string>(
+  schema: Partial<ISchema<T>>,
+  value: T,
   touched: boolean
-): IFormField<string> | void {
+): IFormField<T> | void {
   if (schema.isNotEmpty && value === "") {
     return {
       value,
