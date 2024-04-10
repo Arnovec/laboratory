@@ -1,9 +1,13 @@
 import { createFormBaseApi } from "./createFormBaseApi";
-import { TAllowedTypes } from "./interfaces";
-import { getIsValid } from "./lib/utils";
+import { IValidateResult, TAllowedTypes } from "./interfaces";
 import {
-  type TRuleByType,
-} from "./Rule";
+  isFuncForNumber,
+  isFuncForString,
+  isNumber,
+  isString,
+} from "./lib/type";
+import { getIsValid } from "./lib/utils";
+import { type TRuleByType } from "./Rule";
 
 export function createForm<Template extends Record<string, TAllowedTypes>>(
   template: Template,
@@ -12,16 +16,20 @@ export function createForm<Template extends Record<string, TAllowedTypes>>(
   const baseApi = createFormBaseApi(template);
 
   function validate(key: keyof Template, value: TAllowedTypes) {
-    const rules = validationSchema?.[key]?.value;
+    const validate = validationSchema?.[key]?.validate;
 
-    let validation = getIsValid();
-    if (rules) {
-      for (const nextRule of rules) {
-        validation = nextRule(value);
+    if (validate) {
+      if (isString(value) && isFuncForString(validate)) {
+        return validate(value);
+      }
+
+      if (isNumber(value) && isFuncForNumber(validate)) {
+        return validate(value);
       }
     }
 
-    return validation;
+    // TODO: тут не всегда валидно. Надо перепридумать
+    return getIsValid();
   }
 
   const $validationResults = baseApi.$form.map((form) => {
@@ -29,7 +37,7 @@ export function createForm<Template extends Record<string, TAllowedTypes>>(
       prev[key as keyof Template] = validate(key, value);
 
       return prev;
-    }, {} as Record<keyof Template, { isValid: boolean; messages: string[] }>);
+    }, {} as Record<keyof Template, IValidateResult>);
   });
 
   const $isFormValid = $validationResults.map((results) => {

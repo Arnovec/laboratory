@@ -1,30 +1,27 @@
-import { TAllowedTypes, TRuleFunctionByType } from "../interfaces";
+import {
+  IValidateResult,
+  TAllowedTypes,
+  TRuleFunctionByType,
+} from "../interfaces";
+import { getIsValid } from "../lib/utils";
 
-class Rule<T extends TAllowedTypes> {
-  #rules: TRuleFunctionByType<T>[] = [];
+export abstract class RuleAbstract<T extends TAllowedTypes> {
+  protected rules: TRuleFunctionByType<T>[] = [];
 
-  validate(value: TAllowedTypes) {
-    for (const nextRule of this.#rules) {
+  validate(value: T): IValidateResult {
+    let validation: IValidateResult | undefined;
+
+    for (const nextRule of this.rules) {
       validation = nextRule(value);
+      if (!validation.isValid) {
+        break;
+      }
     }
+
+    return validation || getIsValid();
   }
 }
 
-function isString(obj: unknown): obj is string {
-  if (typeof obj === "string") {
-    return true;
-  }
-
-  return false;
-}
-
-function isNumber(obj: unknown): obj is number {
-  if (typeof obj === "number") {
-    return true;
-  }
-
-  return false;
-}
 // export class RuleContainer {
 //   #rules: Partial<RuleMap> = {};
 

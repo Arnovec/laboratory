@@ -2,7 +2,8 @@
 // import { TestingDesigne } from "@widgets/test-designe";
 // import { MyTodos } from "@widgets/my-todos";
 import "./style.scss";
-import { MyFormContent } from "@widgets/MyFormContent";
+// import { MyFormContent } from "@widgets/MyFormContent";
+import { GigaFormContent } from "@widgets/GigaFormContent";
 // import { TestingAntd } from "@widgets/test-antd";
 
 export default function App() {
@@ -11,7 +12,8 @@ export default function App() {
       {/* <TestAPI /> */}
       {/* <TestingDesigne /> */}
       {/* <TestingAntd/> */}
-      <MyFormContent />
+      {/* <MyFormContent /> */}
+      <GigaFormContent />
     </>
   );
 }

@@ -1,11 +1,9 @@
-import { TRuleFunctionByType } from "../interfaces";
+import { RuleAbstract } from "./RuleAbstract";
 import { getIsValid, getNotValid } from "../lib/utils";
 
-export class NumberRuleContainer {
-  #rules: TRuleFunctionByType<number>[] = [];
-
+export class NumberRuleContainer extends RuleAbstract<number> {
   min(minValue: number, message: string = "", canBeEqual: boolean = true) {
-    this.#rules.push((value) => {
+    this.rules.push((value) => {
       if (value < minValue || (value === minValue && !canBeEqual)) {
         return getNotValid(message);
       }
@@ -14,10 +12,6 @@ export class NumberRuleContainer {
     });
 
     return this;
-  }
-
-  get value() {
-    return this.#rules;
   }
 }
 

@@ -1,7 +1,8 @@
 import { TRuleFunctionByType } from "../interfaces";
 import { getIsValid, getNotValid } from "../lib/utils";
+import { RuleAbstract } from "./RuleAbstract";
 
-export class StringRuleContainer {
+export class StringRuleContainer extends RuleAbstract<string> {
   #rules: TRuleFunctionByType<string>[] = [];
 
   min(minLength: number, message: string = "") {
@@ -14,10 +15,6 @@ export class StringRuleContainer {
     });
 
     return this;
-  }
-
-  get value() {
-    return this.#rules;
   }
 }
 
