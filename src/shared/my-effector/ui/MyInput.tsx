@@ -1,10 +1,10 @@
 import { Input, InputProps } from "antd";
-import { IFieldUpdatedProps, TStore } from "../interfaces/index";
+import { IFieldUpdatedProps, TStore, TValidObject } from "../interfaces";
 import { Event, Store } from "effector";
 import { MyFormItem } from "./MyFormItem";
 import { useStoreMap } from "effector-react";
 
-interface IProps<TObject extends object> {
+interface IProps<TObject extends TValidObject> {
   $store: Store<TStore<TObject>>;
   fieldKey: keyof TObject;
   fieldUpdated: Event<IFieldUpdatedProps<TObject>>;
@@ -13,7 +13,7 @@ interface IProps<TObject extends object> {
   inputProps?: InputProps;
 }
 
-export function MyInput<TObject extends object>({
+export function MyInput<TObject extends TValidObject>({
   $store,
   fieldKey,
   fieldUpdated,

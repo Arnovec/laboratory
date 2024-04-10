@@ -1,9 +1,7 @@
-import {ISchema, IFormField} from "../../../my-effector";
-import {booleanValidation} from "./boolean";
-import {numberValidation} from "./number";
-import {stringValidation} from "./string";
-
-export type TValidValueTypes = string | number | boolean;
+import { ISchema, IFormField, TValidValueTypes } from "../../../my-effector";
+import { booleanValidation } from "./boolean";
+import { numberValidation } from "./number";
+import { stringValidation } from "./string";
 
 export function validateByType(
   schema: Partial<ISchema<TValidValueTypes>>,
@@ -19,12 +17,16 @@ export function validateByType(
   }
 
   if (isBoolean(value)) {
-    return booleanValidation(schema as Partial<ISchema<boolean>>, value, touched);
+    return booleanValidation(
+      schema as Partial<ISchema<boolean>>,
+      value,
+      touched
+    );
   }
 }
 
 function isString(obj: unknown): obj is string {
-  if (typeof obj === 'string') {
+  if (typeof obj === "string") {
     return true;
   }
 
@@ -32,7 +34,7 @@ function isString(obj: unknown): obj is string {
 }
 
 function isNumber(obj: unknown): obj is number {
-  if (typeof obj === 'number') {
+  if (typeof obj === "number") {
     return true;
   }
 
@@ -40,10 +42,9 @@ function isNumber(obj: unknown): obj is number {
 }
 
 function isBoolean(obj: unknown): obj is boolean {
-  if (typeof obj === 'boolean') {
+  if (typeof obj === "boolean") {
     return true;
   }
 
   return false;
 }
-

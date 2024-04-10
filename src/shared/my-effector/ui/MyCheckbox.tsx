@@ -1,11 +1,11 @@
 import { Checkbox, CheckboxProps } from "antd";
-import { IFieldUpdatedProps, IFormField, TStore } from "../interfaces/index";
+import { IFieldUpdatedProps, IFormField, TStore, TValidObject } from "../interfaces/index";
 import { Event, Store } from "effector";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { MyFormItem } from "./MyFormItem";
 import { useStoreMap } from "effector-react";
 
-interface IProps<TObject extends object> {
+interface IProps<TObject extends TValidObject> {
   $store: Store<TStore<TObject>>;
   fieldKey: keyof TObject & string;
   fieldUpdated: Event<IFieldUpdatedProps<TObject>>;
@@ -15,7 +15,7 @@ interface IProps<TObject extends object> {
   checkboxProps?: CheckboxProps;
 }
 
-export function MyCheckbox<TObject extends object>({
+export function MyCheckbox<TObject extends TValidObject>({
   $store,
   fieldKey,
   fieldUpdated,

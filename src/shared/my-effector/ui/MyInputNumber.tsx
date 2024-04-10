@@ -5,7 +5,7 @@ import { valueType } from "antd/es/statistic/utils";
 import { MyFormItem } from "./MyFormItem";
 import { useStoreMap } from "effector-react";
 
-interface IProps<TObject extends object> {
+interface IProps<TObject extends TValidObject> {
   $store: Store<TStore<TObject>>;
   fieldKey: keyof TObject & string;
   fieldUpdated: Event<IFieldUpdatedProps<TObject>>;
@@ -15,7 +15,7 @@ interface IProps<TObject extends object> {
   inputNumberProps?: InputNumberProps;
 }
 
-export function MyInputNumber<TObject extends object>(props: IProps<TObject>) {
+export function MyInputNumber<TObject extends TValidObject>(props: IProps<TObject>) {
   const {
     $store,
     fieldKey,

@@ -1,3 +1,7 @@
+export type TValidValueTypes = string | number | boolean | undefined | null;
+
+export type TValidObject = Record<string, TValidValueTypes>;
+
 export interface IFormField<TValue> {
   value?: TValue;
   touched: boolean;
@@ -17,12 +21,12 @@ export interface ISchema<TValue> {
   value: TValue;
 }
 
-export type TValidationSchema<TObject extends object> = Record<
+export type TValidationSchema<TObject extends TValidObject> = Record<
   keyof TObject,
   Partial<ISchema<TObject[keyof TObject]>>
 >;
 
-export type TStore<TObject extends object> = {
+export type TStore<TObject extends TValidObject> = {
   [Key in keyof TObject]: IFormField<TObject[Key]>;
 };
 

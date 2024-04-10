@@ -4,6 +4,7 @@ import {
   IForcedError,
   IFormField,
   TStore,
+  TValidObject,
   TValidationSchema,
 } from "./interfaces";
 import { validateSchema } from "./lib/validateSchema";
@@ -12,7 +13,7 @@ import { mapForm } from "./lib/mapForm";
 import { formValidationCheck } from "./lib/formValidationCheck";
 import { initialSetValidate } from "./lib/initialSetValidate";
 
-export function createForm<TObject extends object>(
+export function createForm<TObject extends TValidObject>(
   schema: TValidationSchema<TObject>
 ) {
   const dataReset = createEvent();

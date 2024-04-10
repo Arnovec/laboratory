@@ -1,7 +1,7 @@
-import { TStore, TValidationSchema } from "../interfaces";
+import { TStore, TValidObject, TValidationSchema } from "../interfaces";
 import { validateSchema } from "./validateSchema";
 
-export function initialSchemaValidate<TObject extends object>(
+export function initialSchemaValidate<TObject extends TValidObject>(
   schema: TValidationSchema<TObject>
 ): TStore<TObject> {
   const initialMicrostateEntries = Object

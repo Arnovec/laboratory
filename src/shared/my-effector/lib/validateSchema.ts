@@ -1,5 +1,5 @@
-import { IFormField, ISchema } from "../interfaces";
-import { validateByType, TValidValueTypes } from "./validate/indes";
+import { IFormField, ISchema, TValidValueTypes } from "../interfaces";
+import { validateByType } from "./validate";
 
 export function validateSchema(
   schema: Partial<ISchema<TValidValueTypes>> | undefined,

@@ -53,3 +53,5 @@ export const {
   fieldValueDataReset,
   dataReset,
 } = createForm(mySchema);
+
+$form.watch(console.log);

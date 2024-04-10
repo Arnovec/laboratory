@@ -1,6 +1,6 @@
-import { IFormField, TStore } from "../interfaces";
+import { IFormField, TStore, TValidObject } from "../interfaces";
 
-export function formValidationCheck<TObject extends object>(
+export function formValidationCheck<TObject extends TValidObject>(
   store: TStore<TObject>
 ): boolean {
   for (const key in store) {

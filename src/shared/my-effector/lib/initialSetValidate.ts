@@ -1,7 +1,7 @@
-import { TStore, TValidationSchema } from "../interfaces";
+import { TStore, TValidObject, TValidationSchema } from "../interfaces";
 import { validateSchema } from "./validateSchema";
 
-export function initialSetValidate<TObject extends object>(
+export function initialSetValidate<TObject extends TValidObject>(
   schema: TValidationSchema<TObject>,
   payload: TObject
 ): TStore<TObject> {
